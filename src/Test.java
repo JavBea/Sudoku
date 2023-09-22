@@ -3,4 +3,7 @@ public class Test {
     {
         System.out.println("Hello GitHub!");
     }
+
+    int i=0;
+    int gg;
 }
