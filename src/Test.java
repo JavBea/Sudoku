@@ -1,9 +1,9 @@
+import model.*;
+
 public class Test {
     public static void main(String []args)
     {
-        System.out.println("Hello GitHub!");
+        SingleCell
     }
 
-    int i=0;
-    int gg;
 }

@@ -14,7 +14,7 @@ public class SingleCell  extends Cell{
      * */
     private boolean isConfirmed;//单元格状态：确定为true, 待定为false;默认为false
     private int domain;//域：是单元格数字的值域,存储正整数的上限，即 0 < numInCell <=domain
-    private int confirmedNum;//确认值：本单元格的数值，在单元格状态为”确定“（true）的时候有效,且取值在domain中
+    private int confirmedNum=0;//确认值：本单元格的数值，在单元格状态为”确定“（true）的时候有效,且取值在domain中;默认为0
     private List<int> undeterminedNums;//待定值：待选的数值，status为false时可用，取值在domain中
 
 
@@ -26,6 +26,16 @@ public class SingleCell  extends Cell{
         setDomain(domain);
         setConfirmedNum(confirmedNum);
         setUndeterminedNums(undeterminedNums);
+    }
+    public SingleCell(int domain,List<int> undeterminedNums) {
+        setConfirmed(false);
+        setDomain(domain);
+        setUndeterminedNums(undeterminedNums);
+    }
+    public SingleCell(int domain,int confirmedNum) {
+        setConfirmed(true);
+        setDomain(domain);
+        setConfirmedNum(confirmedNum);
     }
     public SingleCell(int domain) {
         setDomain(domain);
@@ -49,11 +59,10 @@ public class SingleCell  extends Cell{
 
     public int getConfirmedNum() {
         //如果单元格值已确定,返回确定值
-        if(isConfirmed) {
+        if(isConfirmed || confirmedNum==0) {
             return confirmedNum;
         }
         //单元格的值未确定，返回0
-        System.out.print("SingleCell Setup Error: Cell Not Confirmed yet.\t-----SingleCell");
         return 0;
     }
 
@@ -90,6 +99,12 @@ public class SingleCell  extends Cell{
 
     public boolean setConfirmedNum(int confirmedNum) {
 
+        //如果单元格已初始化
+        if(isConfirmed) {
+            System.out.print("SingleCell Setup Error: Cell Confirmed already.\t-----SingleCell");
+            return false;
+        }
+
         //如果domain未初始化
         if(domain==0) {
             System.out.print("SingleCell Setup Error: Domain Uninitialized.\t-----SingleCell");
@@ -109,6 +124,7 @@ public class SingleCell  extends Cell{
         }
 
         this.confirmedNum = confirmedNum;
+        this.isConfirmed = true;
         return true;
     }
 
@@ -138,4 +154,5 @@ public class SingleCell  extends Cell{
         this.undeterminedNums = undeterminedNums;
         return true;
     }
+
 }
