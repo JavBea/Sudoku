@@ -40,6 +40,15 @@ public class ThreeCells extends Cell{
         return CellThree;
     }
 
+    public SingleCell[] getCells(){
+        SingleCell [] cells=new SingleCell[3];
+        cells[0]=CellOne;
+        cells[1]=CellTwo;
+        cells[2]=CellThree;
+        return cells;
+
+    }
+
     /**
      * 属性的set方法
      * */
@@ -59,26 +68,26 @@ public class ThreeCells extends Cell{
      * 设置成员方法
      * */
     //将单元格设置为确认值
-    public boolean confirmCellOne(int num) {
+    public boolean confirmCellOne(Integer num) {
         //尝试给单元格一设置确认值
         boolean result=CellOne.setConfirmedNum(num);
         return result;
     }
-    public boolean confirmCellTwo(int num) {
+    public boolean confirmCellTwo(Integer num) {
         //尝试给单元格二设置确认值
         boolean result=CellTwo.setConfirmedNum(num);
         return result;
     }
-    public boolean confirmCellThree(int num) {
+    public boolean confirmCellThree(Integer num) {
         //尝试给单元格三设置确认值
         boolean result=CellThree.setConfirmedNum(num);
         return result;
     }
 
     //返回这个三元组确定值的集合
-    public List<int> getConfirmedNumSet(){
-        List<int> set=new ArrayList<int>();
-        int num=0;
+    public List<Integer> getConfirmedNumSet(){
+        List<Integer> set=new ArrayList<Integer>();
+        Integer num=0;
 
         //确认返回值不会是0
         num=CellOne.getConfirmedNum();
@@ -98,9 +107,9 @@ public class ThreeCells extends Cell{
     }
 
     //返回这个三元组待定值的集合
-    public List<int> getUndeterminedNumSet(){
-        List<int> set=new ArrayList<int>();
-        List<int> nums;
+    public List<Integer> getUndeterminedNumSet(){
+        List<Integer> set=new ArrayList<Integer>();
+        List<Integer> nums;
 
         nums=CellOne.getUndeterminedNums();
         // 计算并集

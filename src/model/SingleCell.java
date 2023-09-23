@@ -13,31 +13,31 @@ public class SingleCell  extends Cell{
      * 单元格属性声明
      * */
     private boolean isConfirmed;//单元格状态：确定为true, 待定为false;默认为false
-    private int domain;//域：是单元格数字的值域,存储正整数的上限，即 0 < numInCell <=domain
-    private int confirmedNum=0;//确认值：本单元格的数值，在单元格状态为”确定“（true）的时候有效,且取值在domain中;默认为0
-    private List<int> undeterminedNums;//待定值：待选的数值，status为false时可用，取值在domain中
+    private Integer domain;//域：是单元格数字的值域,存储正整数的上限，即 0 < numInCell <=domain
+    private Integer confirmedNum=0;//确认值：本单元格的数值，在单元格状态为”确定“（true）的时候有效,且取值在domain中;默认为0
+    private List<Integer> undeterminedNums;//待定值：待选的数值，status为false时可用，取值在domain中
 
 
     /**
      * 定义构造函数
      * */
-    public SingleCell(boolean isConfirmed,int domain,int confirmedNum,List<int> undeterminedNums) {
+    public SingleCell(boolean isConfirmed,Integer domain,Integer confirmedNum,List<Integer> undeterminedNums) {
         setConfirmed(isConfirmed);
         setDomain(domain);
         setConfirmedNum(confirmedNum);
         setUndeterminedNums(undeterminedNums);
     }
-    public SingleCell(int domain,List<int> undeterminedNums) {
+    public SingleCell(Integer domain,List<Integer> undeterminedNums) {
         setConfirmed(false);
         setDomain(domain);
         setUndeterminedNums(undeterminedNums);
     }
-    public SingleCell(int domain,int confirmedNum) {
+    public SingleCell(Integer domain,Integer confirmedNum) {
         setConfirmed(true);
         setDomain(domain);
         setConfirmedNum(confirmedNum);
     }
-    public SingleCell(int domain) {
+    public SingleCell(Integer domain) {
         setDomain(domain);
     }
 
@@ -53,11 +53,11 @@ public class SingleCell  extends Cell{
         return isConfirmed;
     }
 
-    public int getDomain() {
+    public Integer getDomain() {
         return domain;
     }
 
-    public int getConfirmedNum() {
+    public Integer getConfirmedNum() {
         //如果单元格值已确定,返回确定值
         if(isConfirmed || confirmedNum==0) {
             return confirmedNum;
@@ -66,7 +66,7 @@ public class SingleCell  extends Cell{
         return 0;
     }
 
-    public List<int> getUndeterminedNums() {
+    public List<Integer> getUndeterminedNums() {
         //如果单元格值未确定,返回待定值
         if(isConfirmed) {
             return undeterminedNums;
@@ -84,26 +84,20 @@ public class SingleCell  extends Cell{
         this.isConfirmed = confirmed;
     }
 
-    public void setDomain(int domain) {
+    public void setDomain(Integer domain) {
         //检查是否为整数的二次幂
-        int s=(int)(Math.sqrt((double)domain));
+        Integer s=(int)(Math.sqrt((double)domain));
         if(s*s!=domain)
         {
             this.domain=9;
-            System.out.println("SingleCell Setup Error: Domain should be the square of some positive integer." +
+            System.out.println("SingleCell Setup Error: Domain should be the square of some positive Integereger." +
                     "\n default: domain=9\t-----SingleCell");
             return;
         }
         this.domain = domain;
     }
 
-    public boolean setConfirmedNum(int confirmedNum) {
-
-        //如果单元格已初始化
-        if(isConfirmed) {
-            System.out.print("SingleCell Setup Error: Cell Confirmed already.\t-----SingleCell");
-            return false;
-        }
+    public boolean setConfirmedNum(Integer confirmedNum) {
 
         //如果domain未初始化
         if(domain==0) {
@@ -128,10 +122,10 @@ public class SingleCell  extends Cell{
         return true;
     }
 
-    public boolean setUndeterminedNums(List<int> undeterminedNums) {
+    public boolean setUndeterminedNums(List<Integer> undeterminedNums) {
 
         //遍历待定数集
-        for(int num:undeterminedNums) {
+        for(Integer num:undeterminedNums) {
             //如果domain未初始化
             if(domain==0) {
                 System.out.print("SingleCell Setup Error: Domain Uninitialized.\t-----SingleCell");
