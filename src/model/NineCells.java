@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 定义了一个 九宫格 类（ ThreeCells ）
+ * 定义了一个 九宫格 类（ NineCells ）
  *  --用来构造完整数独
  * */
 public class NineCells extends Cell{
 
-
     /**
      * 九宫格属性声明
      * */
+
     private SingleCell []  singleCells;//共有九个单元格
     private ThreeCells [] cols;//有三列，且由刚才的单元格构成
     private ThreeCells [] rows;//有三行，且由刚才的单元格构成
@@ -24,6 +24,31 @@ public class NineCells extends Cell{
      * */
 
     public NineCells(SingleCell[] singleCells) {
+        //输入长度不为9
+        if(singleCells.length!=9){
+            System.out.println("Error:九宫格初始化必须有九个格子");
+            return;
+        }
+        //检查输入的数字
+        boolean isValid=check(singleCells);
+        if(!isValid) {
+            System.out.println("Wrong: 九宫格中出现了相同数字\t-----NineCells");
+        }
+
+        setSingleCells(singleCells);
+        setRowsAndCols();
+    }
+    public NineCells(int[] nums) {
+        //输入长度不为9
+        if(nums.length!=9){
+            System.out.println("Error:九宫格初始化必须有九个数");
+            return;
+        }
+        singleCells=new SingleCell[9];
+        for(int i=0;i<9;i++){
+            singleCells[i]=new SingleCell(9,nums[i]);
+        }
+
         //检查输入的数字
         boolean isValid=check(singleCells);
         if(!isValid) {
@@ -66,8 +91,12 @@ public class NineCells extends Cell{
     public ThreeCells[] getRows() {
         return rows;
     }
+    public ThreeCells getRow(int i){return rows[i];}
     public ThreeCells[] getCols() {
         return cols;
+    }
+    public ThreeCells getCol(int i) {
+        return cols[i];
     }
 
     /**
