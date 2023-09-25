@@ -153,12 +153,14 @@ public class EightyOneCells extends Cell{
     /**
      * 成员方法
      * */
+    //打印方法
     public void print(){
         for(NineCellsRow row:nineCellsRows){
             row.println();
         }
     }
 
+    //检查方法
     public boolean check(){
         boolean result=true;
         for(NineCellsRow row:nineCellsRows)
@@ -176,6 +178,7 @@ public class EightyOneCells extends Cell{
         return result;
     }
 
+    //初始化待定值方法
     public void initUndeterminedNumSet(){
         //设置全集
         List<Integer> all=new ArrayList<>();
@@ -208,6 +211,31 @@ public class EightyOneCells extends Cell{
                 current.setUndeterminedNums(undeterminedNumSet);
             }
         }
+    }
+
+    //为单元格设定确认值，并改变所在行、列、九宫格其他格的待定值的方法
+    //注意row和col都是从1开始的
+    public boolean setConfirmed(int row,int col,int num){
+        boolean result=true;
+        if(num==0){
+            //SingleCell的setConfirmedNum方法允许赋值0,提前单独处理
+            System.out.println("Wrong:不能赋值0\t-----EightOneCells");
+            return false;
+        }
+        //得到单元格
+        SingleCell current=nineCellsRows[row].getCell(col);
+        //设置确认数
+        result=current.setConfirmedNum(num);
+
+        //执行待定值更新方法
+        //九宫格更新
+        current.getNineCells().updateUndeterminedSets(num);
+        //九宫行更新
+        current.getRow().updateUndeterminedSets(num);
+        //九宫列更新
+        current.getCol().updateUndeterminedSets(num);
+
+        return result;
     }
 
 }

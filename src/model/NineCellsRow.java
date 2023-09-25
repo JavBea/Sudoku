@@ -58,6 +58,19 @@ public class NineCellsRow extends Cell{
     public ThreeCells getPartThree(){
         return parts[2];
     }
+    public SingleCell getCell(int col){
+        //注意col是列数，是从1开始的
+        if(col<4) {
+            return getPartOne().getCells()[col];
+        }
+        if(col<7) {
+            return getPartTwo().getCells()[col-3];
+        }
+        if(col<10) {
+            return getPartThree().getCells()[col-6];
+        }
+        return null;
+    }
 
     /**
      * 成员方法
@@ -69,6 +82,7 @@ public class NineCellsRow extends Cell{
         parts[2].print();
         System.out.println();
     }
+
     //检查方法
     public boolean check(){
         List<Integer> set=parts[0].getConfirmedNumSet();
@@ -88,11 +102,16 @@ public class NineCellsRow extends Cell{
         }
         return true;
     }
+
     //得到当前行的已确定数集合
     public List<Integer> getConfirmedNumSet(){
         List<Integer> set=parts[0].getConfirmedNumSet();
         set=merge(set,parts[1].getConfirmedNumSet());
         set=merge(set,parts[2].getConfirmedNumSet());
         return set;
+    }
+
+    //更新九宫行待定值方法
+    public void updateUndeterminedSets(int target){
     }
 }

@@ -67,6 +67,10 @@ public class NineCells extends Cell{
         if(singleCells==null || singleCells.length!=9){
             return false;
         }
+        //设置每个单元格的所属九宫格
+        for(SingleCell cell:singleCells){
+            cell.setNineCells(this);
+        }
         this.singleCells = singleCells;
         return true;
     }
@@ -159,6 +163,20 @@ public class NineCells extends Cell{
         return result;
     }
 
+    //更新九宫格待定值方法
+    public void updateUndeterminedSets(int target){
+        //遍历各单元格
+        for(SingleCell cell:singleCells){
+            //单元格已经确定
+            if(cell.isConfirmed()){
+                continue;
+            }
+            //删除待定值
+            cell.getUndeterminedNums().remove(target);
+        }
+    }
+
+    //打印方法
     public void print(){
         for(ThreeCells threeCells:rows){
             for(SingleCell cell:threeCells.getCells())

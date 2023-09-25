@@ -19,6 +19,7 @@ public class SingleCell  extends Cell{
     private List<Integer> undeterminedNums;//待定值：待选的数值，status为false时可用，取值在domain中
     private NineCellsRow row;//单元格所在行
     private NineCellsCol col;//单元格所在列
+    private NineCells nineCells;//单元格所在九宫格
 
 
     /**
@@ -85,6 +86,10 @@ public class SingleCell  extends Cell{
 
     public NineCellsCol getCol() {
         return col;
+    }
+
+    public NineCells getNineCells() {
+        return nineCells;
     }
 
     /**
@@ -174,6 +179,10 @@ public class SingleCell  extends Cell{
 
     public void setCol(NineCellsCol col) {
         this.col = col;
+    }
+
+    public void setNineCells(NineCells nineCells) {
+        this.nineCells = nineCells;
     }
 
 }

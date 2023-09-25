@@ -5,7 +5,6 @@ public class Main {
     {
         String target="010800007090176583700059026206573149930601025000000000024358060300060400600004873";
         int[][] result=split(target,9);
-//        EightyOneCells sudoku=new EightyOneCells(nineCells);
         EightyOneCells sudoku=new EightyOneCells(result);
         sudoku.print();
         sudoku.initUndeterminedNumSet();
