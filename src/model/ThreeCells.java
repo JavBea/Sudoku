@@ -128,4 +128,13 @@ public class ThreeCells extends Cell{
 
         return set;
     }
+
+    //打印方法
+    public void print(){
+        System.out.print(
+                 CellOne.getConfirmedNum()+"\t"
+                +CellTwo.getConfirmedNum()+"\t"
+                +CellThree.getConfirmedNum()+"\t"
+        );
+    }
 }

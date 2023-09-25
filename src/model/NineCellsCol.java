@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * 定义了一个 九宫列 类（ ThreeCellsCol ）
  *  --用来构造完整数独
@@ -47,4 +49,24 @@ public class NineCellsCol {
     /**
      * 成员方法
      * */
+
+    //检查方法
+    public boolean check(){
+        List<Integer> set=parts[0].getConfirmedNumSet();
+        for(int i:parts[1].getConfirmedNumSet()){
+            if(set.indexOf(i)>0){
+                return false;
+            }else{
+                set.add(i);
+            }
+        }
+        for(int i:parts[2].getConfirmedNumSet()){
+            if(set.indexOf(i)>0){
+                return false;
+            }else{
+                set.add(i);
+            }
+        }
+        return true;
+    }
 }

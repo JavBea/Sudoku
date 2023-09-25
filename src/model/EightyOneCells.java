@@ -19,11 +19,17 @@ public class EightyOneCells extends Cell{
      * */
     public EightyOneCells(NineCells[] nineCells) {
         if(nineCells.length!=9){
-            System.out.println("Error:必须为九个九宫格\t-----EightOneCells");
+            System.out.println("Wrong:必须为九个九宫格\t-----EightOneCells");
+            return;
         }
 
         setNineCells(nineCells);
         setRowsAndCols();
+
+        if(!check()){
+            System.out.println("Wrong:出现重复数字！\t-----EightOneCells");
+        }
+
     }
 
     /**
@@ -32,7 +38,7 @@ public class EightyOneCells extends Cell{
     public void setNineCells(NineCells[] nineCells) {
         nineCellsRows=new NineCellsRow[9];
         nineCellsCols=new NineCellsCol[9];
-        setNineCells(nineCells);
+        this.nineCells=nineCells;
     }
     private void setRowsAndCols(){
         nineCellsRows=new NineCellsRow[9];
@@ -72,5 +78,23 @@ public class EightyOneCells extends Cell{
     /**
      * 成员方法
      * */
+    public void print(){
+        for(NineCellsRow row:nineCellsRows){
+            row.println();
+        }
+    }
+
+    public boolean check(){
+        boolean result=true;
+        for(NineCellsRow row:nineCellsRows)
+        {
+            result=result && row.check();
+        }
+        for(NineCellsCol col:nineCellsCols)
+        {
+            result=result && col.check();
+        }
+        return result;
+    }
 
 }
