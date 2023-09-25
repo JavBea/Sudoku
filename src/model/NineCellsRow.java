@@ -33,6 +33,14 @@ public class NineCellsRow extends Cell{
         this.parts = parts;
     }
 
+    private void setLocation(){
+        for(ThreeCells three:parts){
+            for(SingleCell cell:three.getCells()){
+                cell.setRow(this);
+            }
+        }
+    }
+
     /**
      * 属性的get方法
      * */
@@ -77,5 +85,12 @@ public class NineCellsRow extends Cell{
             }
         }
         return true;
+    }
+    //得到当前行的已确定数集合
+    public List<Integer> getConfirmedNumSet(){
+        List<Integer> set=parts[0].getConfirmedNumSet();
+        set=merge(set,parts[1].getConfirmedNumSet());
+        set=merge(set,parts[2].getConfirmedNumSet());
+        return set;
     }
 }

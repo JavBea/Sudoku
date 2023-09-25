@@ -16,6 +16,8 @@ public class SingleCell  extends Cell{
     private Integer domain;//域：是单元格数字的值域,存储正整数的上限，即 0 < numInCell <=domain
     private Integer confirmedNum=0;//确认值：本单元格的数值，在单元格状态为”确定“（true）的时候有效,且取值在domain中;默认为0
     private List<Integer> undeterminedNums;//待定值：待选的数值，status为false时可用，取值在domain中
+    private NineCellsRow row;//单元格所在行
+    private NineCellsCol col;//单元格所在列
 
 
     /**
@@ -76,6 +78,13 @@ public class SingleCell  extends Cell{
         return null;
     }
 
+    public NineCellsRow getRow() {
+        return row;
+    }
+
+    public NineCellsCol getCol() {
+        return col;
+    }
 
     /**
      * 属性的set方法
@@ -106,7 +115,7 @@ public class SingleCell  extends Cell{
         }
 
         //如果确认数不是正数
-        if(confirmedNum<=0) {
+        if(confirmedNum<0) {
             System.out.print("SingleCell Setup Error: ConfirmedNum Is Not Positive.\t-----SingleCell");
             return false;
         }
@@ -118,7 +127,13 @@ public class SingleCell  extends Cell{
         }
 
         this.confirmedNum = confirmedNum;
-        this.isConfirmed = true;
+
+        //如果输入的确认数为0，视为未确认
+        if(confirmedNum==0){
+            this.isConfirmed = false;
+        }else{
+            this.isConfirmed=true;
+        }
         return true;
     }
 
@@ -147,6 +162,14 @@ public class SingleCell  extends Cell{
 
         this.undeterminedNums = undeterminedNums;
         return true;
+    }
+
+    public void setRow(NineCellsRow row) {
+        this.row = row;
+    }
+
+    public void setCol(NineCellsCol col) {
+        this.col = col;
     }
 
 }

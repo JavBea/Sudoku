@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 定义了一个 八十一宫行 类（ EightOneCells ）
  *  --即一个完整的九乘九数独
@@ -28,8 +31,8 @@ public class EightyOneCells extends Cell{
 
         if(!check()){
             System.out.println("Wrong:出现重复数字！\t-----EightOneCells");
+            return;
         }
-
     }
 
     /**
@@ -75,6 +78,7 @@ public class EightyOneCells extends Cell{
     public NineCellsCol[] getNineCellsCols() {
         return nineCellsCols;
     }
+
     /**
      * 成员方法
      * */
@@ -95,6 +99,36 @@ public class EightyOneCells extends Cell{
             result=result && col.check();
         }
         return result;
+    }
+
+    public void initUndeterminedNumSet(){
+        //设置全集
+        List<Integer> all=new ArrayList<>();
+        all.add(1);all.add(2);all.add(3);
+        all.add(4);all.add(5);all.add(6);
+        all.add(7);all.add(8);all.add(9);
+
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                SingleCell current=nineCells[i].getSingleCell(j);
+                //如果单元格已经确定了
+                if(current.isConfirmed()) {
+                    continue;
+                }
+                //得到九宫格确认值
+                List<Integer> unAvailNumSet=nineCells[i].getConfirmedSet();
+                //得到九宫行确认值
+                unAvailNumSet=merge(unAvailNumSet,current.getRow().getConfirmedNumSet());
+                //得到九宫列确认值
+                unAvailNumSet=merge(unAvailNumSet,current.getCol().getConfirmedNumSet());
+                //移除确认值
+                all.removeAll(unAvailNumSet);
+                //设置待定值
+                current.setUndeterminedNums(all);
+            }
+        }
     }
 
 }

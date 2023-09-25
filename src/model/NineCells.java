@@ -88,6 +88,9 @@ public class NineCells extends Cell{
     public SingleCell[] getSingleCells() {
         return singleCells;
     }
+    public SingleCell getSingleCell(int index){
+        return singleCells[index];
+    }
     public ThreeCells[] getRows() {
         return rows;
     }
@@ -128,21 +131,29 @@ public class NineCells extends Cell{
         return list;
     }
 
-    //将两个List进行集合合并的方法
-    public List<Integer> merge(List<Integer> listOne,List<Integer> listTwo){
-        List<Integer> result=new ArrayList<Integer>();
-        for(Integer i:listOne){
-            if(result.indexOf(i)<0){
-                result.add(i);
-            }
-        }
-        for(Integer i:listTwo){
-            if(result.indexOf(i)<0){
-                result.add(i);
-            }
-        }
-        return result;
+    //得到当前单元格已经确定的数字集
+    public List<Integer> getConfirmedSet(){
+        List<Integer> set=rows[0].getConfirmedNumSet();
+        set=merge(set,rows[1].getConfirmedNumSet());
+        set=merge(set,rows[2].getConfirmedNumSet());
+        return set;
     }
+
+    //将两个List进行集合合并的方法
+//    public List<Integer> merge(List<Integer> listOne,List<Integer> listTwo){
+//        List<Integer> result=new ArrayList<Integer>();
+//        for(Integer i:listOne){
+//            if(result.indexOf(i)<0){
+//                result.add(i);
+//            }
+//        }
+//        for(Integer i:listTwo){
+//            if(result.indexOf(i)<0){
+//                result.add(i);
+//            }
+//        }
+//        return result;
+//    }
 
     //检查一个九个单元格的确认数字是否重复
     public static boolean check(SingleCell []singleCells){

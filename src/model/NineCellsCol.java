@@ -6,7 +6,7 @@ import java.util.List;
  * 定义了一个 九宫列 类（ ThreeCellsCol ）
  *  --用来构造完整数独
  * */
-public class NineCellsCol {
+public class NineCellsCol extends Cell{
 
     /**
      * 九宫列属性声明
@@ -18,9 +18,11 @@ public class NineCellsCol {
      * */
     public NineCellsCol(ThreeCells[] parts) {
         setParts(parts);
+        setLocation();
     }
     public NineCellsCol(ThreeCells partOne,ThreeCells partTwo,ThreeCells partThree) {
         setParts(new ThreeCells[]{partOne,partTwo,partThree});
+        setLocation();
     }
 
     /**
@@ -28,6 +30,15 @@ public class NineCellsCol {
      * */
     public void setParts(ThreeCells[] parts) {
         this.parts = parts;
+    }
+
+    //为单元格设置行坐标
+    private void setLocation(){
+        for(ThreeCells three:parts){
+            for(SingleCell cell:three.getCells()){
+                cell.setCol(this);
+            }
+        }
     }
 
     /**
@@ -68,5 +79,12 @@ public class NineCellsCol {
             }
         }
         return true;
+    }
+    //得到当前行的已确定数集合
+    public List<Integer> getConfirmedNumSet(){
+        List<Integer> set=parts[0].getConfirmedNumSet();
+        set=merge(set,parts[1].getConfirmedNumSet());
+        set=merge(set,parts[2].getConfirmedNumSet());
+        return set;
     }
 }
