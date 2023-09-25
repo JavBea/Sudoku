@@ -86,7 +86,7 @@ public class ThreeCells extends Cell{
 
     //返回这个三元组确定值的集合
     public List<Integer> getConfirmedNumSet(){
-        List<Integer> set=new ArrayList<Integer>();
+        List<Integer> set=new ArrayList<>();
         Integer num=0;
 
         //确认返回值不会是0
@@ -131,8 +131,13 @@ public class ThreeCells extends Cell{
 
     //打印方法
     public void print(){
+//        System.out.print(
+//                (CellOne.getConfirmedNum()!=0)?(CellOne.getConfirmedNum()):" "+"\t"
+//                +((CellTwo.getConfirmedNum()!=0)?(CellTwo.getConfirmedNum()):" ")+"\t"
+//                +((CellThree.getConfirmedNum()!=0)?(CellThree.getConfirmedNum()):" ")+"\t"
+//        );
         System.out.print(
-                 CellOne.getConfirmedNum()+"\t"
+                CellOne.getConfirmedNum()+"\t"
                 +CellTwo.getConfirmedNum()+"\t"
                 +CellThree.getConfirmedNum()+"\t"
         );

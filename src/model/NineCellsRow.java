@@ -21,9 +21,11 @@ public class NineCellsRow extends Cell{
      * */
     public NineCellsRow(ThreeCells[] parts) {
         setParts(parts);
+        setLocation();
     }
     public NineCellsRow(ThreeCells partOne,ThreeCells partTwo,ThreeCells partThree) {
         setParts(new ThreeCells[]{partOne,partTwo,partThree});
+        setLocation();
     }
 
     /**

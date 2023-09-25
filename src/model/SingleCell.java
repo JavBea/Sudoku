@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -138,14 +139,14 @@ public class SingleCell  extends Cell{
     }
 
     public boolean setUndeterminedNums(List<Integer> undeterminedNums) {
+        //如果domain未初始化
+        if(domain==0) {
+            System.out.print("SingleCell Setup Error: Domain Uninitialized.\t-----SingleCell");
+            return false;
+        }
 
         //遍历待定数集
         for(Integer num:undeterminedNums) {
-            //如果domain未初始化
-            if(domain==0) {
-                System.out.print("SingleCell Setup Error: Domain Uninitialized.\t-----SingleCell");
-                return false;
-            }
 
             //如果待定数不是正数
             if(num<=0) {
@@ -159,8 +160,11 @@ public class SingleCell  extends Cell{
                 return false;
             }
         }
-
-        this.undeterminedNums = undeterminedNums;
+        this.undeterminedNums=new ArrayList<>();
+        for(int i:undeterminedNums)
+        {
+            this.undeterminedNums.add(i);
+        }
         return true;
     }
 

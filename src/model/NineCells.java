@@ -139,22 +139,6 @@ public class NineCells extends Cell{
         return set;
     }
 
-    //将两个List进行集合合并的方法
-//    public List<Integer> merge(List<Integer> listOne,List<Integer> listTwo){
-//        List<Integer> result=new ArrayList<Integer>();
-//        for(Integer i:listOne){
-//            if(result.indexOf(i)<0){
-//                result.add(i);
-//            }
-//        }
-//        for(Integer i:listTwo){
-//            if(result.indexOf(i)<0){
-//                result.add(i);
-//            }
-//        }
-//        return result;
-//    }
-
     //检查一个九个单元格的确认数字是否重复
     public static boolean check(SingleCell []singleCells){
         boolean result=true;

@@ -26,5 +26,28 @@ public abstract class Cell {
         }
         return result;
     }
+    //将字符串转为int数组
+    public static int [] transform(String target){
+        int[] result=new int[target.length()];
+        for(int i=0;i<target.length();i++){
+            result[i]=target.charAt(i)-48;
+        }
+        return result;
+    }
+    //将字符串转为多个长度为len的int数组
+    public static int [][] split(String target,int len){
+        int left=len-target.length()%len;
+        for(int i=0;i<left;i++)
+        {
+            target+="0";
+        }
+        int amount=target.length()/len;
+        int[] [] result=new int[amount][len];
+        for(int i=0;i<amount;i++){
+            String current=target.substring(i*len,i*len+len);
+            result[i]=transform(current);
+        }
+        return result;
+    }
 
 }

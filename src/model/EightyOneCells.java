@@ -34,7 +34,78 @@ public class EightyOneCells extends Cell{
             return;
         }
     }
+    public EightyOneCells(String target) {
+        if(target.length()!=81){
+            System.out.println("Wrong:必须含有81格\t-----EightOneCells");
+            return;
+        }
+        int[][] result=split(target,9);
 
+        NineCells nineCells1=new NineCells(result[0]);
+        NineCells nineCells2=new NineCells(result[1]);
+        NineCells nineCells3=new NineCells(result[2]);
+        NineCells nineCells4=new NineCells(result[3]);
+        NineCells nineCells5=new NineCells(result[4]);
+        NineCells nineCells6=new NineCells(result[5]);
+        NineCells nineCells7=new NineCells(result[6]);
+        NineCells nineCells8=new NineCells(result[7]);
+        NineCells nineCells9=new NineCells(result[8]);
+
+        NineCells[] nineCells=new NineCells[]{
+                nineCells1,
+                nineCells2,
+                nineCells3,
+                nineCells4,
+                nineCells5,
+                nineCells6,
+                nineCells7,
+                nineCells8,
+                nineCells9
+        };
+
+        setNineCells(nineCells);
+        setRowsAndCols();
+
+        if(!check()){
+            System.out.println("Wrong:出现重复数字！\t-----EightOneCells");
+            return;
+        }
+    }
+    public EightyOneCells(int[][] result) {
+//        if(result.length!=9 || result[0].length!=9){
+//            System.out.println("Wrong:必须含有81格\t-----EightOneCells");
+//            return;
+//        }
+
+        NineCells nineCells1=new NineCells(result[0]);
+        NineCells nineCells2=new NineCells(result[1]);
+        NineCells nineCells3=new NineCells(result[2]);
+        NineCells nineCells4=new NineCells(result[3]);
+        NineCells nineCells5=new NineCells(result[4]);
+        NineCells nineCells6=new NineCells(result[5]);
+        NineCells nineCells7=new NineCells(result[6]);
+        NineCells nineCells8=new NineCells(result[7]);
+        NineCells nineCells9=new NineCells(result[8]);
+
+        NineCells[] nineCells=new NineCells[]{
+                nineCells1,
+                nineCells2,
+                nineCells3,
+                nineCells4,
+                nineCells5,
+                nineCells6,
+                nineCells7,
+                nineCells8,
+                nineCells9
+        };
+
+        setNineCells(nineCells);
+        setRowsAndCols();
+
+        if(!check()){
+            System.out.println("Wrong:出现重复数字！\t-----EightOneCells");
+        }
+    }
     /**
      * 属性的set方法
      * */
@@ -56,9 +127,9 @@ public class EightyOneCells extends Cell{
                 );
 
                 nineCellsCols[i*3+j]=new NineCellsCol(
-                        nineCells[i*3].getCol(j)
-                        ,nineCells[i*3+1].getCol(j)
-                        ,nineCells[i*3+2].getCol(j)
+                        nineCells[i].getCol(j)
+                        ,nineCells[i+3].getCol(j)
+                        ,nineCells[i+6].getCol(j)
                 );
             }
         }
@@ -98,6 +169,10 @@ public class EightyOneCells extends Cell{
         {
             result=result && col.check();
         }
+        for(NineCells nine:nineCells)
+        {
+            result=result && NineCells.check(nine.getSingleCells());
+        }
         return result;
     }
 
@@ -108,10 +183,13 @@ public class EightyOneCells extends Cell{
         all.add(4);all.add(5);all.add(6);
         all.add(7);all.add(8);all.add(9);
 
+
         for(int i=0;i<9;i++)
         {
             for(int j=0;j<9;j++)
             {
+                List<Integer> undeterminedNumSet=new ArrayList<>(all);
+                
                 SingleCell current=nineCells[i].getSingleCell(j);
                 //如果单元格已经确定了
                 if(current.isConfirmed()) {
@@ -124,9 +202,10 @@ public class EightyOneCells extends Cell{
                 //得到九宫列确认值
                 unAvailNumSet=merge(unAvailNumSet,current.getCol().getConfirmedNumSet());
                 //移除确认值
-                all.removeAll(unAvailNumSet);
+                undeterminedNumSet.removeAll(unAvailNumSet);
                 //设置待定值
-                current.setUndeterminedNums(all);
+//                nineCells[i].getSingleCell(j).setUndeterminedNums(undeterminedNumSet);
+                current.setUndeterminedNums(undeterminedNumSet);
             }
         }
     }

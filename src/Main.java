@@ -3,32 +3,10 @@ import model.*;
 public class Main {
     public static void main(String []args)
     {
-
-        int[][] result=split("010800007090176583700059026206573149930601" +
-                "025000000000024358060300060400600004873",9);
-        NineCells nineCells1=new NineCells(result[0]);
-        NineCells nineCells2=new NineCells(result[1]);
-        NineCells nineCells3=new NineCells(result[2]);
-        NineCells nineCells4=new NineCells(result[3]);
-        NineCells nineCells5=new NineCells(result[4]);
-        NineCells nineCells6=new NineCells(result[5]);
-        NineCells nineCells7=new NineCells(result[6]);
-        NineCells nineCells8=new NineCells(result[7]);
-        NineCells nineCells9=new NineCells(result[8]);
-
-        NineCells[] nineCells=new NineCells[]{
-                nineCells1,
-                nineCells2,
-                nineCells3,
-                nineCells4,
-                nineCells5,
-                nineCells6,
-                nineCells7,
-                nineCells8,
-                nineCells9
-        };
-
-        EightyOneCells sudoku=new EightyOneCells(nineCells);
+        String target="010800007090176583700059026206573149930601025000000000024358060300060400600004873";
+        int[][] result=split(target,9);
+//        EightyOneCells sudoku=new EightyOneCells(nineCells);
+        EightyOneCells sudoku=new EightyOneCells(result);
         sudoku.print();
         sudoku.initUndeterminedNumSet();
     }
