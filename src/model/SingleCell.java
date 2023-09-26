@@ -54,7 +54,7 @@ public class SingleCell  extends Cell{
     }
 
     public boolean isNotConfirmed() {
-        return isConfirmed;
+        return !isConfirmed;
     }
 
     public Integer getDomain() {
@@ -90,6 +90,20 @@ public class SingleCell  extends Cell{
 
     public NineCells getNineCells() {
         return nineCells;
+    }
+
+    public String toString(){
+        //用于返回当前单元格的内容
+        //如果确定返回确定值
+        if(this.isConfirmed){
+            return String.valueOf(confirmedNum);
+        }else{//否则返回待定值串
+            String result="";
+            for(int i:undeterminedNums){
+                result+=String.valueOf(i);
+            }
+            return result;
+        }
     }
 
     /**

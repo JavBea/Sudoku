@@ -59,13 +59,13 @@ public class NineCellsCol extends Cell{
     public SingleCell getCell(int row){
         //注意row是行数，是从1开始的
         if(row<4) {
-            return getPartOne().getCells()[row];
+            return getPartOne().getCells()[row-1];
         }
         if(row<7) {
-            return getPartTwo().getCells()[row-3];
+            return getPartTwo().getCells()[row-4];
         }
         if(row<10) {
-            return getPartThree().getCells()[row-6];
+            return getPartThree().getCells()[row-7];
         }
         return null;
     }
@@ -104,5 +104,12 @@ public class NineCellsCol extends Cell{
 
     //更新九宫列待定值方法
     public void updateUndeterminedSets(int target){
+        for(ThreeCells threeCells:parts){
+            for(SingleCell cell:threeCells.getCells()){
+                if(cell.isNotConfirmed()){
+                    cell.getUndeterminedNums().remove(target);
+                }
+            }
+        }
     }
 }

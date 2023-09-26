@@ -106,6 +106,7 @@ public class EightyOneCells extends Cell{
             System.out.println("Wrong:出现重复数字！\t-----EightOneCells");
         }
     }
+
     /**
      * 属性的set方法
      * */
@@ -149,6 +150,7 @@ public class EightyOneCells extends Cell{
     public NineCellsCol[] getNineCellsCols() {
         return nineCellsCols;
     }
+
 
     /**
      * 成员方法
@@ -213,7 +215,20 @@ public class EightyOneCells extends Cell{
         }
     }
 
+    //得到某一个单元格的方法,按坐标
+    public SingleCell getSingleCell(int row,int col){
+        return nineCellsRows[row-1].getCell(col);//row需要减一
+    }
+
+    //得到某一个单元格的方法,按坐标
+    public SingleCell getSingleCell(int index){
+        int row=index/9;
+        int col=index%9;
+        return nineCellsRows[row].getCell(col+1);//此时row不需要减一,col需要加一
+    }
+
     //为单元格设定确认值，并改变所在行、列、九宫格其他格的待定值的方法
+    //提供两种参数输入方式，包括输入单元格坐标，和单元格引用
     //注意row和col都是从1开始的
     public boolean setConfirmed(int row,int col,int num){
         boolean result=true;
@@ -236,6 +251,55 @@ public class EightyOneCells extends Cell{
         current.getCol().updateUndeterminedSets(num);
 
         return result;
+    }
+    public boolean setConfirmed(SingleCell current,int num){
+        boolean result=true;
+        if(num==0){
+            //SingleCell的setConfirmedNum方法允许赋值0,提前单独处理
+            System.out.println("Wrong:不能赋值0\t-----EightOneCells");
+            return false;
+        }
+        //设置确认数
+        result=current.setConfirmedNum(num);
+
+        //执行待定值更新方法
+        //九宫格更新
+        current.getNineCells().updateUndeterminedSets(num);
+        //九宫行更新
+        current.getRow().updateUndeterminedSets(num);
+        //九宫列更新
+        current.getCol().updateUndeterminedSets(num);
+
+        return result;
+    }
+
+    //数独自动求解方法
+    public boolean autoSolve(){
+        //求解结果，成功求解为true，否则为false
+        boolean result=false;
+
+        return false;
+    }
+
+
+    /**
+     * 求解方法集
+     *  --方法autoSolve会用到的方法集合
+     * */
+    //寻找并确认只有一个待定值的单元格，此时其必为该值
+    private void onlyPossibilityForOneCell(){
+        for(NineCells nine:nineCells){
+            for(SingleCell cell:nine.getSingleCells()){
+                //单元格待定
+                if(cell.isNotConfirmed()){
+                    //单元格待定数组长度为0
+                    if(cell.getUndeterminedNums().size()==1){
+                        //设置确认值
+                        setConfirmed(cell,cell.getUndeterminedNums().get(0));
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -8,6 +8,9 @@ public class Main {
         EightyOneCells sudoku=new EightyOneCells(result);
         sudoku.print();
         sudoku.initUndeterminedNumSet();
+
+        SudokuGUI game=new SudokuGUI(sudoku);
+        game.fresh();
     }
     //将字符串转为int数组
     public static int [] transform(String target){
