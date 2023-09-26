@@ -1,8 +1,11 @@
+package GUI;
+
+import model.EightyOneCells;
+import model.NineCells;
+import model.SingleCell;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-
-import model.*;
-
 import java.awt.*;
 
 public class SudokuGUI {
@@ -14,6 +17,7 @@ public class SudokuGUI {
     private EightyOneCells sudoku;
 
     public SudokuGUI(EightyOneCells sudoku){
+        sudoku.setGameGUI(this);
         this.sudoku=sudoku;
 
         frame=new JFrame("Sudoku");

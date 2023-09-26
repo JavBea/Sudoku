@@ -1,8 +1,8 @@
 import model.*;
+import GUI.*;
 
 public class Main {
-    public static void main(String []args)
-    {
+    public static void main(String []args){
         String target="010800007090176583700059026206573149930601025000000000024358060300060400600004873";
         int[][] result=split(target,9);
         EightyOneCells sudoku=new EightyOneCells(result);

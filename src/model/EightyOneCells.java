@@ -1,5 +1,5 @@
 package model;
-
+import GUI.SudokuGUI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +16,7 @@ public class EightyOneCells extends Cell{
     private NineCells[] nineCells;
     private NineCellsRow[] nineCellsRows;
     private NineCellsCol[] nineCellsCols;
+    private SudokuGUI gameGUI;//所在的游戏窗口
 
     /**
      * 定义构造函数
@@ -115,6 +116,7 @@ public class EightyOneCells extends Cell{
         nineCellsCols=new NineCellsCol[9];
         this.nineCells=nineCells;
     }
+
     private void setRowsAndCols(){
         nineCellsRows=new NineCellsRow[9];
         nineCellsCols=new NineCellsCol[9];
@@ -136,6 +138,10 @@ public class EightyOneCells extends Cell{
         }
     }
 
+    public void setGameGUI(SudokuGUI gameGUI) {
+        this.gameGUI = gameGUI;
+    }
+
     /**
      * 属性的get方法
      * */
@@ -151,6 +157,9 @@ public class EightyOneCells extends Cell{
         return nineCellsCols;
     }
 
+    public SudokuGUI getGameGUI() {
+        return gameGUI;
+    }
 
     /**
      * 成员方法
