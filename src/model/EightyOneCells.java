@@ -189,41 +189,6 @@ public class EightyOneCells extends Cell{
         return result;
     }
 
-    //初始化待定值方法
-    public void initUndeterminedNumSet(){
-        //设置全集
-        List<Integer> all=new ArrayList<>();
-        all.add(1);all.add(2);all.add(3);
-        all.add(4);all.add(5);all.add(6);
-        all.add(7);all.add(8);all.add(9);
-
-
-        for(int i=0;i<9;i++)
-        {
-            for(int j=0;j<9;j++)
-            {
-                List<Integer> undeterminedNumSet=new ArrayList<>(all);
-                
-                SingleCell current=nineCells[i].getSingleCell(j);
-                //如果单元格已经确定了
-                if(current.isConfirmed()) {
-                    continue;
-                }
-                //得到九宫格确认值
-                List<Integer> unAvailNumSet=nineCells[i].getConfirmedSet();
-                //得到九宫行确认值
-                unAvailNumSet=merge(unAvailNumSet,current.getRow().getConfirmedNumSet());
-                //得到九宫列确认值
-                unAvailNumSet=merge(unAvailNumSet,current.getCol().getConfirmedNumSet());
-                //移除确认值
-                undeterminedNumSet.removeAll(unAvailNumSet);
-                //设置待定值
-//                nineCells[i].getSingleCell(j).setUndeterminedNums(undeterminedNumSet);
-                current.setUndeterminedNums(undeterminedNumSet);
-            }
-        }
-    }
-
     //得到某一个单元格的方法,按坐标
     public SingleCell getSingleCell(int row,int col){
         return nineCellsRows[row-1].getCell(col);//row需要减一
@@ -282,6 +247,46 @@ public class EightyOneCells extends Cell{
         return result;
     }
 
+    //初始化待定值方法
+    public void initUndeterminedNumSet(){
+        //设置全集
+        List<Integer> all=new ArrayList<>();
+        all.add(1);all.add(2);all.add(3);
+        all.add(4);all.add(5);all.add(6);
+        all.add(7);all.add(8);all.add(9);
+
+
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                List<Integer> undeterminedNumSet=new ArrayList<>(all);
+
+                SingleCell current=nineCells[i].getSingleCell(j);
+                //如果单元格已经确定了
+                if(current.isConfirmed()) {
+                    continue;
+                }
+                //得到九宫格确认值
+                List<Integer> unAvailNumSet=nineCells[i].getConfirmedSet();
+                //得到九宫行确认值
+                unAvailNumSet=merge(unAvailNumSet,current.getRow().getConfirmedNumSet());
+                //得到九宫列确认值
+                unAvailNumSet=merge(unAvailNumSet,current.getCol().getConfirmedNumSet());
+                //移除确认值
+                undeterminedNumSet.removeAll(unAvailNumSet);
+                //设置待定值
+//                nineCells[i].getSingleCell(j).setUndeterminedNums(undeterminedNumSet);
+                current.setUndeterminedNums(undeterminedNumSet);
+            }
+        }
+    }
+
+    //简化待定集方法
+    public void simplifyUndeterminedNumSet(){
+
+    }
+
     //数独自动求解方法
     public boolean autoSolve(){
         //求解结果，成功求解为true，否则为false
@@ -292,8 +297,34 @@ public class EightyOneCells extends Cell{
 
 
     /**
+     * 待定值化简方法集
+     *  --在已经初始化的基础上简化单元格的待定值集
+     *  --方法simplifyUndeterminedNumSet会用到的化简方法集
+     * */
+
+    //当一个九宫格的某一个三元行的待定值合集有其他两行未有的值，则该值确定在该行
+    public void numInOneRow(){
+        //遍历九宫格集
+        for(int i=0;i<9;i++){
+            NineCells current=nineCells[i];
+            for(int[] target:current.getRowHalfConfirmedNumSet()){
+                //下面方法调用的路径：
+                // 当前九宫格 => 九宫格的三元行 => 三元行的第一个单元格 => 单元格的所在九宫行 => 九宫行的更新方法
+                //target的第一位是行数（1开始）,第二位是目标数
+                current.getRow(target[0]-1).getCellOne().getRow().updateUndeterminedSetsExcept(i%3+1,target[1]);
+            }
+            for(int[] target:current.getColHalfConfirmedNumSet()){
+                //下面方法调用的路径：
+                // 当前九宫格 => 九宫格的三元行 => 三元行的第一个单元格 => 单元格的所在九宫行 => 九宫行的更新方法
+                //target的第一位是行数（1开始）,第二位是目标数
+                current.getCol(target[0]-1).getCellOne().getCol().updateUndeterminedSetsExcept(i%3+1,target[1]);
+            }
+        }
+    }
+
+    /**
      * 求解方法集
-     *  --方法autoSolve会用到的方法集合
+     *  --方法autoSolve会用到的求解方法集
      * */
     //寻找并确认只有一个待定值的单元格，此时其必为该值
     private void onlyPossibilityForOneCell(){

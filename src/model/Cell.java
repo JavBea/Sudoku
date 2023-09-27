@@ -13,7 +13,17 @@ public abstract class Cell {
 
     //将两个List进行集合合并的方法
     public List<Integer> merge(List<Integer> listOne, List<Integer> listTwo){
-        List<Integer> result=new ArrayList<Integer>();
+        List<Integer> result=new ArrayList<>();
+
+        //处理空值
+        if(listOne==null){
+            return listTwo;
+        }
+        if(listTwo==null){
+            return listOne;
+        }
+
+        //合并到一个新数组中
         for(Integer i:listOne){
             if(result.indexOf(i)<0){
                 result.add(i);
@@ -24,6 +34,7 @@ public abstract class Cell {
                 result.add(i);
             }
         }
+
         return result;
     }
     //将字符串转为int数组

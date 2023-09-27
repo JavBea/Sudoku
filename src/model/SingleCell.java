@@ -76,7 +76,6 @@ public class SingleCell  extends Cell{
             return undeterminedNums;
         }
         //单元格的值已确定，返回null
-        System.out.print("SingleCell Setup Error: Cell Confirmed already.\t-----SingleCell");
         return null;
     }
 

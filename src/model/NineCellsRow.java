@@ -121,4 +121,24 @@ public class NineCellsRow extends Cell{
             }
         }
     }
+
+    //更新九宫行除了三元格parts[part]之外另两个三元格的方法
+    //part从一开始
+    public void updateUndeterminedSetsExcept(int part,int target){
+
+        for(int i=0;i<3;i++){
+            //跳过指定的部分
+            if(i==part-1){
+                continue;
+            }
+
+            ThreeCells threeCells=parts[i];
+            for(SingleCell cell:threeCells.getCells()){
+                if(cell.isNotConfirmed()){
+                    cell.getUndeterminedNums().remove(target);
+                }
+            }
+        }
+    }
+
 }

@@ -108,38 +108,36 @@ public class ThreeCells extends Cell{
 
     //返回这个三元组待定值的集合
     public List<Integer> getUndeterminedNumSet(){
-        List<Integer> set=new ArrayList<Integer>();
-        List<Integer> nums;
-
-        nums=CellOne.getUndeterminedNums();
-        // 计算并集
-        List<Integer> union = set.stream().distinct().collect(Collectors.toList());
-        union.addAll(nums.stream().filter(item -> !set.contains(item)).collect(Collectors.toList()));
-
-        nums=CellTwo.getUndeterminedNums();
-        // 计算并集
-        union = set.stream().distinct().collect(Collectors.toList());
-        union.addAll(nums.stream().filter(item -> !set.contains(item)).collect(Collectors.toList()));
-
-        nums=CellThree.getUndeterminedNums();
-        // 计算并集
-        union = set.stream().distinct().collect(Collectors.toList());
-        union.addAll(nums.stream().filter(item -> !set.contains(item)).collect(Collectors.toList()));
+        List<Integer> set=CellOne.getUndeterminedNums();
+        set=merge(set,CellTwo.getUndeterminedNums());
+        set=merge(set,CellThree.getUndeterminedNums());
+//        List<Integer> set=new ArrayList<>();
+//        List<Integer> nums;
+//        nums=CellOne.getUndeterminedNums();
+//        // 计算并集
+//        List<Integer> union = set.stream().distinct().collect(Collectors.toList());
+//        union.addAll(nums.stream().filter(item -> !set.contains(item)).collect(Collectors.toList()));
+//
+//        nums=CellTwo.getUndeterminedNums();
+//        // 计算并集
+//        union = set.stream().distinct().collect(Collectors.toList());
+//        union.addAll(nums.stream().filter(item -> !set.contains(item)).collect(Collectors.toList()));
+//
+//        nums=CellThree.getUndeterminedNums();
+//        // 计算并集
+//        union = set.stream().distinct().collect(Collectors.toList());
+//        union.addAll(nums.stream().filter(item -> !set.contains(item)).collect(Collectors.toList()));
 
         return set;
     }
 
     //打印方法
     public void print(){
-//        System.out.print(
-//                (CellOne.getConfirmedNum()!=0)?(CellOne.getConfirmedNum()):" "+"\t"
-//                +((CellTwo.getConfirmedNum()!=0)?(CellTwo.getConfirmedNum()):" ")+"\t"
-//                +((CellThree.getConfirmedNum()!=0)?(CellThree.getConfirmedNum()):" ")+"\t"
-//        );
         System.out.print(
                 CellOne.getConfirmedNum()+"\t"
                 +CellTwo.getConfirmedNum()+"\t"
                 +CellThree.getConfirmedNum()+"\t"
         );
     }
+
 }

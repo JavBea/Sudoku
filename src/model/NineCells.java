@@ -19,6 +19,7 @@ public class NineCells extends Cell{
     private ThreeCells [] rows;//有三行，且由刚才的单元格构成
 
 
+
     /**
      * 定义构造函数
      * */
@@ -135,6 +136,97 @@ public class NineCells extends Cell{
         return list;
     }
 
+
+    //得到行半确认值（即虽未确定，但位置固定在九宫格的某一行）
+    //返回的值是多个int数组的数组，每个数组长度为2，第一位代表行数（从1开始），第二位代表半确定值
+    public List<int[]> getRowHalfConfirmedNumSet(){
+        List<int[]> result=new ArrayList<>();
+        
+        List<Integer> one=rows[0].getUndeterminedNumSet();
+        if(one!=null){
+            one.removeAll(rows[1].getUndeterminedNumSet());
+            one.removeAll(rows[2].getUndeterminedNumSet());
+            if(one.size()>0){
+                for(int i:one){
+                    result.add(new int[]{1,i});
+                }
+            }
+        }
+
+        one=rows[1].getUndeterminedNumSet();
+        if(one!=null){
+            one.removeAll(rows[0].getUndeterminedNumSet());
+            one.removeAll(rows[2].getUndeterminedNumSet());
+            if(one.size()>0){
+                for(int i:one){
+                    result.add(new int[]{2,i});
+                }
+            }
+
+        }
+
+        one=rows[2].getUndeterminedNumSet();
+        if(one!=null){
+            one.removeAll(rows[1].getUndeterminedNumSet());
+            one.removeAll(rows[0].getUndeterminedNumSet());
+            if(one.size()>0){
+                for(int i:one){
+                    result.add(new int[]{3,i});
+                }
+            }
+
+        }
+        
+        return result;
+
+    }
+
+    //得到列半确认值（即虽未确定，但位置固定在九宫格的某一列）
+    //返回的值是多个int数组的数组，每个数组长度为2，第一位代表行数（从1开始），第二位代表半确定值
+    public List<int[]> getColHalfConfirmedNumSet(){
+        List<int[]> result=new ArrayList<>();
+
+        List<Integer> one=cols[0].getUndeterminedNumSet();
+        if(one!=null){
+            one.removeAll(cols[1].getUndeterminedNumSet());
+            one.removeAll(cols[2].getUndeterminedNumSet());
+            if(one.size()>0){
+                for(int i:one){
+                    result.add(new int[]{1,i});
+                }
+            }
+
+        }
+
+        if(one!=null){
+            one=cols[1].getUndeterminedNumSet();
+            one.removeAll(cols[0].getUndeterminedNumSet());
+            one.removeAll(cols[2].getUndeterminedNumSet());
+            if(one.size()>0){
+                for(int i:one){
+                    result.add(new int[]{2,i});
+                }
+            }
+
+        }
+
+        one=cols[2].getUndeterminedNumSet();
+        if(one!=null){
+            one.removeAll(cols[1].getUndeterminedNumSet());
+            one.removeAll(cols[0].getUndeterminedNumSet());
+            if(one.size()>0){
+                for(int i:one){
+                    result.add(new int[]{3,i});
+                }
+            }
+
+        }
+
+        return result;
+
+    }
+
+
     //得到当前单元格已经确定的数字集
     public List<Integer> getConfirmedSet(){
         List<Integer> set=rows[0].getConfirmedNumSet();
@@ -174,6 +266,11 @@ public class NineCells extends Cell{
             //删除待定值
             cell.getUndeterminedNums().remove(target);
         }
+    }
+
+    //更新九宫格某一行待定值方法
+    public void updateRowUndeterminedSet(int row,int target){
+
     }
 
     //打印方法
